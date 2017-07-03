@@ -26,3 +26,9 @@ script:
     ./...
   - go test -v ./...
   - goveralls -service=travis-ci
+notifications:
+  slack:
+    rooms:
+    - secure: nKhn+i06v57lWLFQB5emvBvoVqNzfSBY+dRaztPCJlh9dJtvprzHTlXQZPLh2U16A7REYeQ5JOqpvdwf0Fz4UjOvvk5z4x5RQLCaunzelGvNat9olavSfCBpcnIXUp2aOT1sdb/dE/qiTqRlptuK3CXkKYV/t9tm1iOwliHBFBeqXfLDaqLm88lZbiNUqg5hNrgBujuQNZg9OxuvRCaH6SAyfb97a6Zyg2iPe5ygKcQZKdpJTG/sSTGI2EgCDTPe08GtYg3oBMFFbq/P9LudlTphnX33gPipWWmsuDaYCH0yxokWE73B9WpPrEAxrX68qYHYYAL0fidUfO1oVFOgKAwRSe0KhChy0/ptxPuFp97So9HNOyUKWhfbbVIUrhEV/cWtdm2+pnDnZKpB/YHcZljMaosiiRNP1wP7HZSBo38ZnOK5t3uBLem6FNtNYeULFn+txZWuPQrFRJVhNaCxGwA+qPyLyB1r9BgBYAqvX/PlzO2hlTxguoC9lEwqwW8TufbsDAHcvQw13vB74QzqbH5irmvoR3Nosk1EftovtOYXljfLbPhTl+Vw7tsJdD53kExsp2OzT/smuXu/G9OKaXL5LinXh7n9bA/01AGHr8SMt+i6fEUoV7GoOWaOcnFq9SXf6TaH1ykJmu5R8veDzbF7wMbgyxC7FkDeJVuIwKg=
+    on_success: always
+  email: false
