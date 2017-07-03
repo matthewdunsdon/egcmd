@@ -3,7 +3,7 @@ Package egcmd provides you with a library to include examples for your commands 
 
 Currently, this library is not intended for use in production, predominantly as it has been created learning golang.
 
-Usage:
+Usage - Adding your examples:
 
 To get started you should create an `examples.go` file in your project as the same level as `package main`.  In this file you will want to set the correct package and import, which should look something like:
 
@@ -25,9 +25,19 @@ Typically you can add your cli examples as variables, like shown below:
 		_         = initCmdEx.Envs("MYAPP_PATH=~/Documents/", "", "Initialise app data to custom location using MYAPP_PATH")
 	)
 
-
-You are by no means forced to organise your examples like this. You could add these to `func init()` or to a function of you own.
+You are by no means forced to organise your examples like this; you could add these to `func init()` or to a function of you own.
 Your examples do have to be in the main package, but you will need to link up your CLI help code with your egcmd app instance(s).
+
+Usage - Finding examples:
+
+To find the examples that are associated a specific command, or with the top level of your application, you need to call the `app.Find` and supply a string that matches the application name and optionally the command name.
+
+	// | Search              | Description                                      |
+	// |---------------------|--------------------------------------------------|
+	// | `myapp`             | Examples for application top level help          |
+	// | `myapp init`        | Examples associated with `"init"` command        |
+	// | `myapp imports add` | Examples associated with `"imports add"` command |
+	// | `version`           | ⚠️  Invalid: application name not supplied       |
 */
 package egcmd
 

@@ -10,13 +10,16 @@ Currently, this library is not intended for use in production, predominantly as 
 
 The main features are:
 
-* It defines a `egcmd.Example` type to describe an example CLI command, including arguments and environment variables
-* It allows examples to be associated with the top level of your CLI app
+* It defines an `egcmd.Example` type to describe an example CLI command, including arguments and environment variables
+* It allows examples to be associated with the top level of your CLI app and with particular commands
+* It provides an `app.Find(...)` function to find the examples that are associated a specific command, or with the top level of your application
 
 ---
 
 * [Install](#install)
 * [Usage](#usage)
+  * [Adding your examples](#adding_your_examples)
+  * [Finding examples](#finding_examples)
 * [License](./LICENSE)
 
 ---
@@ -30,6 +33,8 @@ go get github.com/matthewdunsdon/egcmd
 ```
 
 ## Usage
+
+### Adding your examples
 
 To get started you should create an `examples.go` file in your project as the same level as `package main`.  In this file you will want to set the correct package and import, which should look something like:
 
@@ -60,6 +65,16 @@ You are by no means forced to organise your examples like this;
 - You could add these to `func init()` or to a function of you own.
 - Your examples do have to be in the main package, but you will need to link up your CLI help code with your egcmd app instance(s).
 
+### Finding examples
+
+To find the examples that are associated a specific command, or with the top level of your application, you need to call the `app.Find` and supply a string that matches the application name and optionally the command name.
+
+| Search              | Description                                      |
+|---------------------|--------------------------------------------------|
+| `myapp`             | Examples for application top level help          |
+| `myapp init`        | Examples associated with `"init"` command        |
+| `myapp imports add` | Examples associated with `"imports add"` command |
+| `version`           | ⚠️ _Invalid: application name not supplied_      |
 
 ## License
 
