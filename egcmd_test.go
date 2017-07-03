@@ -22,6 +22,4 @@ func TestNew(t *testing.T) {
 	if got := len(app.examples); expectedExampleCount != got {
 		t.Errorf("Expected example count to be %q, got %q", expectedName, got)
 	}
-
-	return
 }
