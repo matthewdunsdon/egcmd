@@ -13,7 +13,7 @@ func TestNew(t *testing.T) {
 	app.Command("cmd")
 
 	if _, ok := app.commands["cmd"]; !ok {
-		t.Errorf("Expected command to be added, but it eas not found")
+		t.Errorf("Expected command to be added, but it was not found")
 	}
 
 	app.Example("cmd", "A command")

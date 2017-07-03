@@ -7,7 +7,7 @@ type Example struct {
 	// Arguments contains the arguments and flags associated with the command.
 	Arguments string
 
-	// Envs contains any environment varaibles and command prefixes needed for the example
+	// EnvVars contains any environment variables and command prefixes needed for the example
 	EnvVars string
 
 	// Description is the textual description of the example,
