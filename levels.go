@@ -1,5 +1,9 @@
 package egcmd
 
+import (
+	"strings"
+)
+
 // A Level provides a context for examples to be found,
 // whether this is at the top-level of your app or at a command.
 type Level struct {
@@ -40,6 +44,21 @@ func (a *App) Command(name string) (command *Command) {
 	if !ok {
 		command = &Command{Level: Level{name: name}}
 		a.commands[name] = command
+	}
+
+	return
+}
+
+// Find returns the examples that belong to a particular level
+func (a *App) Find(search string) (examples []*Example) {
+	if search == a.name {
+		examples = a.examples
+	} else if strings.HasPrefix(search, a.name) {
+		command := search[len(a.name)+1:]
+
+		if value, ok := a.commands[command]; ok {
+			examples = value.examples
+		}
 	}
 
 	return

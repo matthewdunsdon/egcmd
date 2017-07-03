@@ -1,6 +1,7 @@
 package egcmd
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -139,6 +140,81 @@ func TestAppCommand(t *testing.T) {
 				t.Errorf("Expected command to have an example count of %t, got %t", tc.duplicateCommand, got)
 			}
 
+		})
+	}
+}
+
+func TestAppFind(t *testing.T) {
+	appExamples := []*Example{
+		{"", "Action: default", ""},
+		{"simple", "Action: simple", ""},
+		{"complex sub-action", "Action: complex sub-action", ""},
+	}
+	simpleExamples := []*Example{
+		{"", "Default for simple", ""},
+		{"--debug", "Simple with debug", ""},
+	}
+	complexExamples := []*Example{
+		{"--json", "Default for complex with json arg", ""},
+		{"sub-action", "complex action with sub-action", ""},
+	}
+	subActionExamples := []*Example{
+		{"", "Subaction", "APP_KEY=1234"},
+	}
+
+	app := App{
+		Level: Level{"root", appExamples},
+		commands: map[string]*Command{
+			"simple":             {Level: Level{"simple", simpleExamples}},
+			"complex":            {Level: Level{"complex", complexExamples}},
+			"complex sub-action": {Level: Level{"complex sub-action", subActionExamples}},
+		},
+	}
+
+	testCases := []struct {
+		testName string
+		search   string
+		want     []*Example
+	}{
+		{
+			"Root",
+			"root",
+			appExamples,
+		},
+		{
+			"SimpleCommand",
+			"root simple",
+			simpleExamples,
+		},
+		{
+			"ComplexCommand",
+			"root complex",
+			complexExamples,
+		},
+		{
+			"ComplexSubCommand",
+			"root complex sub-action",
+			subActionExamples,
+		},
+		{
+			"CommandNotFound",
+			"root no-match",
+			nil,
+		},
+		{
+			"InvalidSearchs",
+			"invalid",
+			nil,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.testName, func(t *testing.T) {
+			got := app.Find(tc.search)
+
+			if !reflect.DeepEqual(tc.want, got) {
+				t.Errorf("Expected examples to be %#v, got %#v", tc.want, got)
+			}
 		})
 	}
 }
