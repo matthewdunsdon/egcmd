@@ -51,15 +51,17 @@ func (a *App) Command(name string) (command *Command) {
 
 // Find returns the examples that belong to a particular command
 // or to the application top level when empty string provided
-func (a *App) Find(command string) (examples ExamplesFound, ok bool) {
+func (a *App) Find(command string) (examples ExamplesFound) {
 
 	if command == "" {
 		examples = ExamplesFound{Context: a.name, Examples: a.examples}
-		ok = true
-	} else if value, found := a.commands[command]; found {
-		fullCommandName := fmt.Sprintf("%s %s", a.name, command)
-		examples = ExamplesFound{Context: fullCommandName, Examples: value.examples}
-		ok = true
+		return
+	}
+
+	examples = ExamplesFound{Context: fmt.Sprintf("%s %s", a.name, command)}
+
+	if value, found := a.commands[command]; found {
+		examples.Examples = value.examples
 	}
 
 	return

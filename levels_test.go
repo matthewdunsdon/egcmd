@@ -175,47 +175,37 @@ func TestAppFind(t *testing.T) {
 		testName string
 		command  string
 		want     ExamplesFound
-		ok       bool
 	}{
 		{
 			"Root",
 			"",
 			ExamplesFound{Context: "root", Examples: appExamples},
-			true,
 		},
 		{
 			"SimpleCommand",
 			"simple",
 			ExamplesFound{Context: "root simple", Examples: simpleExamples},
-			true,
 		},
 		{
 			"ComplexCommand",
 			"complex",
 			ExamplesFound{Context: "root complex", Examples: complexExamples},
-			true,
 		},
 		{
 			"ComplexSubCommand",
 			"complex sub-action",
 			ExamplesFound{Context: "root complex sub-action", Examples: subActionExamples},
-			true,
 		},
 		{
 			"CommandNotFound",
 			"no-match",
-			ExamplesFound{},
-			false,
+			ExamplesFound{Context: "root no-match"},
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.testName, func(t *testing.T) {
-			got, ok := app.Find(tc.command)
-
-			if tc.ok != ok {
-				t.Errorf("Expected ok to be %#v, got %#v", tc.want, got)
-			}
+			got := app.Find(tc.command)
 
 			if tc.want.Context != got.Context {
 				t.Errorf("Expected context to be %#v, got %#v", tc.want, got)
