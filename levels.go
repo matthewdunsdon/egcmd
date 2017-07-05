@@ -1,7 +1,7 @@
 package egcmd
 
 import (
-	"strings"
+	"fmt"
 )
 
 // A Level provides a context for examples to be found,
@@ -49,19 +49,26 @@ func (a *App) Command(name string) (command *Command) {
 	return
 }
 
-// Find returns the examples that belong to a particular level
-func (a *App) Find(search string) (examples []*Example) {
-	if search == a.name {
-		examples = a.examples
-	} else if strings.HasPrefix(search, a.name) {
-		command := search[len(a.name)+1:]
+// Find returns the examples that belong to a particular command
+// or to the application top level when empty string provided
+func (a *App) Find(command string) (examples ExamplesFound, ok bool) {
 
-		if value, ok := a.commands[command]; ok {
-			examples = value.examples
-		}
+	if command == "" {
+		examples = ExamplesFound{Context: a.name, Examples: a.examples}
+		ok = true
+	} else if value, found := a.commands[command]; found {
+		fullCommandName := fmt.Sprintf("%s %s", a.name, command)
+		examples = ExamplesFound{Context: fullCommandName, Examples: value.examples}
+		ok = true
 	}
 
 	return
+}
+
+// ExamplesFound provides a list of examples along with the context that the belong to
+type ExamplesFound struct {
+	Context  string
+	Examples []*Example
 }
 
 // Command provides a container for top-level and command examples to be instantiated

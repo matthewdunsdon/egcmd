@@ -69,12 +69,16 @@ You are by no means forced to organise your examples like this;
 
 To find the examples that are associated a specific command, or with the top level of your application, you need to call the `app.Find` and supply a string that matches the application name and optionally the command name.
 
-| Search              | Description                                      |
-|---------------------|--------------------------------------------------|
-| `myapp`             | Examples for application top level help          |
-| `myapp init`        | Examples associated with `"init"` command        |
-| `myapp imports add` | Examples associated with `"imports add"` command |
-| `version`           | ⚠️ _Invalid: application name not supplied_      |
+```go
+	// Results with examples from application top level
+	results, ok := myAppEx.Find("")
+
+	// Results with examples from `"init"` command
+	results, ok = myAppEx.Find("init")
+
+	// Results with examples from `"imports add"` command
+	results, ok = myAppEx.Find("imports add")
+```
 
 ## License
 

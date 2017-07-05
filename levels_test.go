@@ -173,47 +173,56 @@ func TestAppFind(t *testing.T) {
 
 	testCases := []struct {
 		testName string
-		search   string
-		want     []*Example
+		command  string
+		want     ExamplesFound
+		ok       bool
 	}{
 		{
 			"Root",
-			"root",
-			appExamples,
+			"",
+			ExamplesFound{Context: "root", Examples: appExamples},
+			true,
 		},
 		{
 			"SimpleCommand",
-			"root simple",
-			simpleExamples,
+			"simple",
+			ExamplesFound{Context: "root simple", Examples: simpleExamples},
+			true,
 		},
 		{
 			"ComplexCommand",
-			"root complex",
-			complexExamples,
+			"complex",
+			ExamplesFound{Context: "root complex", Examples: complexExamples},
+			true,
 		},
 		{
 			"ComplexSubCommand",
-			"root complex sub-action",
-			subActionExamples,
+			"complex sub-action",
+			ExamplesFound{Context: "root complex sub-action", Examples: subActionExamples},
+			true,
 		},
 		{
 			"CommandNotFound",
-			"root no-match",
-			nil,
-		},
-		{
-			"InvalidSearchs",
-			"invalid",
-			nil,
+			"no-match",
+			ExamplesFound{},
+			false,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.testName, func(t *testing.T) {
-			got := app.Find(tc.search)
+			got, ok := app.Find(tc.command)
 
-			if !reflect.DeepEqual(tc.want, got) {
-				t.Errorf("Expected examples to be %#v, got %#v", tc.want, got)
+			if tc.ok != ok {
+				t.Errorf("Expected ok to be %#v, got %#v", tc.want, got)
+			}
+
+			if tc.want.Context != got.Context {
+				t.Errorf("Expected context to be %#v, got %#v", tc.want, got)
+			}
+
+			if !reflect.DeepEqual(tc.want.Examples, got.Examples) {
+				t.Errorf("Expected the examples found to be list %#v, got %#v", tc.want, got)
 			}
 		})
 	}
