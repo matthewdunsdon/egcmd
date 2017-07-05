@@ -2,30 +2,42 @@ language: go
 sudo: false
 go: 1.8
 before_install:
-  - go get github.com/mattn/goveralls
-  - go get -u github.com/alecthomas/gometalinter
-  - gometalinter --install
+- go get github.com/mattn/goveralls
+- go get -u github.com/alecthomas/gometalinter
+- gometalinter --install
 install:
-  - go get -t -v ./...
+- go get -t -v ./...
 script:
-  - gometalinter
-    --disable-all
-    --enable=vet
-    --enable=vetshadow
-    --enable=golint
-    --enable=errcheck
-    --enable=ineffassign
-    --enable=interfacer
-    --enable=unconvert
-    --enable=goconst
-    --enable=gosimple
-    --enable=staticcheck
-    --enable=gas
-    --vendor
-    --tests
-    ./...
-  - go test -v ./...
-  - goveralls -service=travis-ci
+# Not enabling `gocyclo` - does not ignore code generated output
+# Not enabling `lll` - line length not important
+# Not enabling `gosimple` or `staticcheck` or `unused` - as `megacheck` is enabled
+- gometalinter
+  --disable-all
+  --enable=aligncheck
+  --enable=deadcode
+  --enable=dupl
+  --enable=errcheck
+  --enable=gas
+  --enable=goconst
+  --enable=goimports
+  --enable=golint
+  --enable=gotype
+  --enable=ineffassign
+  --enable=interfacer
+  --enable=megacheck
+  --enable=misspell
+  --enable=safesql
+  --enable=structcheck
+  --enable=unconvert
+  --enable=unparam
+  --enable=varcheck
+  --enable=vet
+  --enable=vetshadow
+  --vendor
+  --tests
+  ./...
+- go test -v ./...
+- goveralls -service=travis-ci
 notifications:
   slack:
     rooms:

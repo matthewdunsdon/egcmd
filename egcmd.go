@@ -17,11 +17,11 @@ Typically you can add your cli examples as variables, like shown below:
 
 	var (
 		myAppEx = egcmd.New("myapp")
-		_       = myAppEx.Example("init", "Initalise app data.")
+		_       = myAppEx.Example("init", "Initialise app data.")
 		_       = myAppEx.Example("version --json", "Get application version details in json format.")
 
 		initCmdEx = myAppEx.Command("init")
-		_         = initCmdEx.Example("--defaults", "Initalise app data using the recommended defaults")
+		_         = initCmdEx.Example("--defaults", "Initialise app data using the recommended defaults")
 		_         = initCmdEx.Envs("MYAPP_PATH=~/Documents/", "", "Initialise app data to custom location using MYAPP_PATH")
 	)
 
