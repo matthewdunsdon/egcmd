@@ -1,6 +1,6 @@
 # egcmd
 [![GoDoc](https://godoc.org/github.com/matthewdunsdon/egcmd?status.svg)](https://godoc.org/github.com/matthewdunsdon/egcmd)
-[![Build Status](https://travis-ci.org/matthewdunsdon/egcmd.svg?branch=master)](https://travis-ci.org/matthewdunsdon/egcmd)
+![go](https://github.com/matthewdunsdon/egcmd/workflows/go/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/matthewdunsdon/egcmd/badge.svg?branch=master)](https://coveralls.io/github/matthewdunsdon/egcmd?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/matthewdunsdon/egcmd)](https://goreportcard.com/report/github.com/matthewdunsdon/egcmd)
 
